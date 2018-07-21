@@ -2,9 +2,9 @@ const mongoose = require("mongoose");
 const Schema   = mongoose.Schema;
 
 const courseSchema = new Schema({
-  coursename: String,
-  duration: String,
-  tema: String
+  typePostIt: {type:String, enum: ["START DOING","STOP DOING","STAY THE SAME", "DO MORE OF", "DO LESS OF" ]},
+  initiative: String,
+  userId: String
 }, {
   timestamps: { createdAt: "created_at", updatedAt: "updated_at" }
 });
