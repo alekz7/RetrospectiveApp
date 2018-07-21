@@ -14,7 +14,7 @@ const PostIt         = require("../models/postIt");
 const bcryptSalt     = 10;
 
 router.get('/postIt', (req, res, next) => {
-  if (req.user.role === "TEACHER") {
+  if ("BOSS" === "BOSS")  {
     PostIt.find()
       .then(posIt => {
         res.render("ta/courses", { courses });
@@ -27,7 +27,7 @@ router.get('/postIt', (req, res, next) => {
   };
 });
 router.get('/postIt/:id', (req, res, next) => {
-  if (req.user.role === "TA") {
+  if ("BOSS" === "BOSS")  {
     let courseId = req.params.id;
     console.log(courseId);
     PostIt.findOne({'_id': courseId})
@@ -42,15 +42,15 @@ router.get('/postIt/:id', (req, res, next) => {
     res.redirect('/login');
   };
 });
-router.get('/courses/add', (req, res, next) => {
-  if (req.user.role === "TA") {
+router.get('/postIt/add', (req, res, next) => {
+  if ("BOSS" === "BOSS")  {
     res.render("ta/postIt-add");
   } else {
     res.redirect('/login');
   };
 });
-router.post('/courses/add', (req, res, next) => {
-  if (req.user.role === "TA") {
+router.post('/postIts/add', (req, res, next) => {
+  if ("BOSS" === "BOSS")  {
     const { coursename, duration, tema } = req.body;
     const newPostIt = new PostIt({ coursename, duration, tema });
     new PostIt.save()
@@ -64,8 +64,8 @@ router.post('/courses/add', (req, res, next) => {
     res.redirect('/login');
   };
 });
-router.get('/courses/edit', (req, res, next) => {
-  if (req.user.role === "TA") {
+router.get('/postIts/edit', (req, res, next) => {
+  if ("BOSS" === "BOSS")  {
     PostIt.findOne({_id: req.query.course_id})
     .then((postIt) => {
       console.log(postIt);
@@ -78,13 +78,13 @@ router.get('/courses/edit', (req, res, next) => {
     res.redirect('/login');
   };
 });
-router.post('/courses/edit', (req, res, next) => {
-  if (req.user.role === "TA") {
+router.post('/postIts/edit', (req, res, next) => {
+  if ("BOSS" === "BOSS")  {
     const { coursename, duration, tema } = req.body;
     PostIt.update({ _id: req.query.course_id}, { $set: { coursename, duration, tema } },
                  { new: true })
     .then((postIt) => {
-      res.redirect('/courses');
+      res.redirect('/postIts');
     })
     .catch((error) => {
       console.log(error);
@@ -93,7 +93,7 @@ router.post('/courses/edit', (req, res, next) => {
     res.redirect('/login');
   };
 });
-router.get('/courses/delete', (req, res, next) => {
+router.get('/postIts/delete', (req, res, next) => {
   if (req.user.role === "TA") {
     PostIt.findByIdAndRemove({_id: req.query.course_id}, (err, postIt) => {
       if (err) return res.status(500).send(err);
@@ -191,5 +191,11 @@ function checkRoles(role) {
     }
   };
 }
+
+
+router.get("/startDoing", (req, res, next) => {
+  res.render('startDoing');
+  // res.render("passport/profile", { user : req.user.username});
+ });
 
 module.exports = router;
