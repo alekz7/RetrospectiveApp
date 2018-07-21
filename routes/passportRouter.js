@@ -116,12 +116,8 @@ router.get("/private", ensureLogin.ensureLoggedIn(), (req, res, next) => {
   }
 });
 router.get("/signup", (req, res, next) => {
-<<<<<<< HEAD
   // if (req.user.role === "BOSS") {
   if ("BOSS" === "BOSS") {
-=======
-  if (/*req.user.role*/"BOSS" === "BOSS") {
->>>>>>> 21c285ea7e04cb47b2187203935f894f289d3d2a
     User.find().then( users =>{
       console.log(users);
       res.render("passport/signup", { users });
@@ -130,13 +126,8 @@ router.get("/signup", (req, res, next) => {
     res.redirect('/login');
   };
 });
-<<<<<<< HEAD
-router.post("/signup", (req, res, next) => { 
-  if ("BOSS" === "BOSS") {
-=======
 router.post("/signup", (req, res, next) => {
   if (/*req.user.role*/"BOSS" === "BOSS") {
->>>>>>> 21c285ea7e04cb47b2187203935f894f289d3d2a
     const username = req.body.username;
     const password = req.body.password;
     if(username.toLowerCase().includes("ironhack")){
