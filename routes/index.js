@@ -6,6 +6,8 @@ router.get('/', (req, res, next) => {
   res.render('index');
 });
 
+
+// 
 // router.get('/private', checkBoss, (req, res) => {
 //   res.render('private', {user: req.user});
 // });

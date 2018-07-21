@@ -9,7 +9,7 @@ const checkDeveloper = checkRoles('DEVELOPER');
 const router         = express.Router();
 // User model
 const User           = require("../models/user");
-const Course         = require("../models/course");
+const Course         = require("../models/postIt");
 // Bcrypt to encrypt passwords
 const bcryptSalt     = 10;
 
@@ -116,7 +116,7 @@ router.get("/private", ensureLogin.ensureLoggedIn(), (req, res, next) => {
   }
 });
 router.get("/signup", (req, res, next) => {
-  if (req.user.role === "BOSS") {
+  if (/*req.user.role*/"BOSS" === "BOSS") {
     User.find().then( users =>{
       console.log(users);
       res.render("passport/signup", { users });
@@ -126,10 +126,14 @@ router.get("/signup", (req, res, next) => {
   };
 });
 router.post("/signup", (req, res, next) => {
-  if (req.user.role === "BOSS") {
+  if (/*req.user.role*/"BOSS" === "BOSS") {
     const username = req.body.username;
     const password = req.body.password;
-    const role     = req.body.role;
+    if(username.toLowerCase().includes("ironhack")){
+      role = "TEACHER"
+    } else {
+      role = "ESTUDIANTE"
+    }
     console.log(role);
     if (username === "" || password === "") {
       res.render("passport/signup", { message: "Indicate username and password" });
