@@ -18,7 +18,7 @@ const User = require("./models/user");
 
 mongoose.Promise = Promise;
 mongoose
-  .connect('mongodb://localhost/lab-passport-roles', {useMongoClient: true})
+  .connect('mongodb://localhost/retrospectiveApp', {useMongoClient: true})
   .then(() => {
     console.log('Connected to Mongo!')
   }).catch(err => {

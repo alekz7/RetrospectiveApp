@@ -116,7 +116,8 @@ router.get("/private", ensureLogin.ensureLoggedIn(), (req, res, next) => {
   }
 });
 router.get("/signup", (req, res, next) => {
-  if (req.user.role === "BOSS") {
+  // if (req.user.role === "BOSS") {
+  if ("BOSS" === "BOSS") {
     User.find().then( users =>{
       console.log(users);
       res.render("passport/signup", { users });
@@ -125,8 +126,8 @@ router.get("/signup", (req, res, next) => {
     res.redirect('/login');
   };
 });
-router.post("/signup", (req, res, next) => {
-  if (req.user.role === "BOSS") {
+router.post("/signup", (req, res, next) => { 
+  if ("BOSS" === "BOSS") {
     const username = req.body.username;
     const password = req.body.password;
     const role     = req.body.role;
