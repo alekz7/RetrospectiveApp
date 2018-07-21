@@ -8,6 +8,5 @@ const userSchema = new Schema({
   pic: String
 });
 
-
 const User = mongoose.model("User", userSchema);
 module.exports = User;
