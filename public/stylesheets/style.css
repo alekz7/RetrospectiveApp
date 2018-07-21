@@ -2,7 +2,28 @@ body {
   padding: 50px;
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif; }
 
-a {
-  color: #00B7FF; }
+.cent {
+  margin: 0 auto;
+  text-align: center; }
+
+.card {
+  border: none !important; }
+
+.postick {
+  background-color: #303F9F;
+  color: #FFFFFF;
+  display: inline-block;
+  height: 200px;
+  border: 1px solid #FFFFFF; }
+
+.off {
+  text-decoration: none;
+  color: #FFFFFF;
+  position: absolute;
+  margin: 20% 35%; }
+
+.off:hover {
+  text-decoration: none !important;
+  color: #FFFFFF !important; }
 
 /*# sourceMappingURL=style.css.map */

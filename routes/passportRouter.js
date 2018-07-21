@@ -193,9 +193,26 @@ function checkRoles(role) {
 }
 
 
-router.get("/startDoing", (req, res, next) => {
-  res.render('startDoing');
+router.get("/startdoing", (req, res, next) => {
+  res.render('startdoing');
   // res.render("passport/profile", { user : req.user.username});
  });
 
+ router.get("/staythesame", (req, res, next) => {
+  res.render('staythesame');
+  // res.render("passport/profile", { user : req.user.username});
+ });
+
+ router.get("/doMoreOf", (req, res, next) => {
+  res.render('doMoreOf');
+  // res.render("passport/profile", { user : req.user.username});
+ });
+
+ router.get("/dolessof", (req, res, next)=> {
+  res.render("dolessof")
+ })
+
+ router.get("/stopdoing", (req, res, next)=>{
+   res.render("stopdoing")
+ })
 module.exports = router;
