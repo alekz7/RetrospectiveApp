@@ -16,11 +16,16 @@ const bcrypt       = require("bcrypt");
 
 const User = require("./models/user");
 
+var connectionString;
+connectionString = 'mongodb://'+ process.env.DBUSR + ':'+process.env.DBPASS + '@ds145951.mlab.com:45951/retrospectiveapp';
+//connectionString = 'mongodb://localhost/lab-passport-roles';
+console.log(connectionString);
+
 mongoose.Promise = Promise;
 mongoose
-  .connect('mongodb://localhost/lab-passport-roles', {useMongoClient: true})
+  .connect(connectionString, {useMongoClient: true})
   .then(() => {
-    console.log('Connected to Mongo!')
+    console.log('Connected to Mongo Cloud!')
   }).catch(err => {
     console.error('Error connecting to mongo', err)
   });

@@ -9,14 +9,14 @@ const checkDeveloper = checkRoles('DEVELOPER');
 const router         = express.Router();
 // User model
 const User           = require("../models/user");
-const Course         = require("../models/postIt");
+const PostIt         = require("../models/postIt");
 // Bcrypt to encrypt passwords
 const bcryptSalt     = 10;
 
-router.get('/courses', (req, res, next) => {
-  if (req.user.role === "TA") {
-    Course.find()
-      .then(courses => {
+router.get('/postIt', (req, res, next) => {
+  if (req.user.role === "TEACHER") {
+    PostIt.find()
+      .then(posIt => {
         res.render("ta/courses", { courses });
       })
       .catch(error => {
@@ -26,14 +26,14 @@ router.get('/courses', (req, res, next) => {
     res.redirect('/login');
   };
 });
-router.get('/course/:id', (req, res, next) => {
+router.get('/postIt/:id', (req, res, next) => {
   if (req.user.role === "TA") {
     let courseId = req.params.id;
     console.log(courseId);
-    Course.findOne({'_id': courseId})
-      .then(course => {
-        console.log(course);
-        res.render("ta/course-detail", { course });
+    PostIt.findOne({'_id': courseId})
+      .then(postIt => {
+        console.log(postIt);
+        res.render("ta/postIt-detail", { postIt });
       })
       .catch(error => {
         console.log(error)
@@ -44,7 +44,7 @@ router.get('/course/:id', (req, res, next) => {
 });
 router.get('/courses/add', (req, res, next) => {
   if (req.user.role === "TA") {
-    res.render("ta/course-add");
+    res.render("ta/postIt-add");
   } else {
     res.redirect('/login');
   };
@@ -52,9 +52,9 @@ router.get('/courses/add', (req, res, next) => {
 router.post('/courses/add', (req, res, next) => {
   if (req.user.role === "TA") {
     const { coursename, duration, tema } = req.body;
-    const newCourse = new Course({ coursename, duration, tema });
-    newCourse.save()
-    .then((course) => {
+    const newPostIt = new PostIt({ coursename, duration, tema });
+    new PostIt.save()
+    .then((postIt) => {
       res.redirect('/courses');
     })
     .catch((error) => {
@@ -66,10 +66,10 @@ router.post('/courses/add', (req, res, next) => {
 });
 router.get('/courses/edit', (req, res, next) => {
   if (req.user.role === "TA") {
-    Course.findOne({_id: req.query.course_id})
-    .then((course) => {
-      console.log(course);
-      res.render("ta/course-edit", { course });
+    PostIt.findOne({_id: req.query.course_id})
+    .then((postIt) => {
+      console.log(postIt);
+      res.render("ta/postIt-edit", { postIt });
     })
     .catch((error) => {
       console.log(error);
@@ -81,9 +81,9 @@ router.get('/courses/edit', (req, res, next) => {
 router.post('/courses/edit', (req, res, next) => {
   if (req.user.role === "TA") {
     const { coursename, duration, tema } = req.body;
-    Course.update({ _id: req.query.course_id}, { $set: { coursename, duration, tema } },
+    PostIt.update({ _id: req.query.course_id}, { $set: { coursename, duration, tema } },
                  { new: true })
-    .then((course) => {
+    .then((postIt) => {
       res.redirect('/courses');
     })
     .catch((error) => {
@@ -95,11 +95,11 @@ router.post('/courses/edit', (req, res, next) => {
 });
 router.get('/courses/delete', (req, res, next) => {
   if (req.user.role === "TA") {
-    Course.findByIdAndRemove({_id: req.query.course_id}, (err, course) => {
+    PostIt.findByIdAndRemove({_id: req.query.course_id}, (err, postIt) => {
       if (err) return res.status(500).send(err);
       const response = {
         message: "Curso eliminado exitosamente",
-        id: course._id
+        id: postIt._id
       };
       return res.redirect('/courses');
     });
@@ -126,7 +126,7 @@ router.get("/signup", (req, res, next) => {
   };
 });
 router.post("/signup", (req, res, next) => {
-  if (/*req.user.role*/"BOSS" === "BOSS") {
+  if ("BOSS" === "BOSS") {
     const username = req.body.username;
     const password = req.body.password;
     if(username.toLowerCase().includes("ironhack")){
@@ -177,8 +177,8 @@ router.post("/login", passport.authenticate("local", {
 }));
 router.get("/profile", (req, res, next) => {
   console.log(req.user.username);
-  res.render('passport/profile');
-  // res.render("passport/profile", { user : req.user.username});
+  res.render('passport/profile',{user: req.user.username});
+   //res.render("passport/profile", { user : req.user.username});
 });
 
 function checkRoles(role) {
